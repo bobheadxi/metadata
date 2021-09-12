@@ -2,8 +2,8 @@ import { DateTime } from 'luxon';
 import { maybeJSONLD } from './jsonld';
 
 export type Metadata = {
-  url: string;
-  title: string;
+  url?: string;
+  title?: string;
   author?: string;
   description?: string;
   publisher?: string;
@@ -49,6 +49,7 @@ export function parseMeta(doc: Document): Metadata {
         doc.querySelector('meta[name="author"]')
       )?.getAttribute('content') ||
       jsonld?.get('author.name') ||
+      doc.querySelector('a[rel="author"]')?.textContent ||
       maybeTitleHasAuthor(title),
 
     publisher:
