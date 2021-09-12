@@ -27,7 +27,7 @@ export function parseMeta(doc: Document): Metadata {
   // refer to https://sourcegraph.com/github.com/microlinkhq/metascraper/-/tree/packages when in doubt
   const meta: Metadata = {
     url,
-    title: title.trim(),
+    title: title?.trim(),
 
     description:
       (
