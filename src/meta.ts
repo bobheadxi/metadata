@@ -20,9 +20,17 @@ export function parseMeta(doc: Document): Metadata {
     jsonld?.get('headline');
 
   // get a better canonical URL if available
-  const url =
+  let url =
     doc.querySelector('meta[property="og:url"]')?.getAttribute('content') ||
     doc.querySelector('link[rel="canonical"]')?.getAttribute('href');
+  let parsedURL: URL;
+  if (url) {
+    try {
+      parsedURL = new URL(url);
+    } catch (err) {
+      url = undefined; // URL is invalid, unset
+    }
+  }
 
   // refer to https://sourcegraph.com/github.com/microlinkhq/metascraper/-/tree/packages when in doubt
   const meta: Metadata = {
@@ -49,9 +57,7 @@ export function parseMeta(doc: Document): Metadata {
         ?.getAttribute('content') ||
       jsonld?.get('isPartOf.name') ||
       maybeRSSHasPublisher(doc) ||
-      url
-        ? new URL(url).hostname
-        : undefined,
+      parsedURL?.hostname,
 
     published: maybeDate(
       doc
