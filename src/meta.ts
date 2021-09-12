@@ -50,7 +50,9 @@ export function parseMeta(doc: Document): Metadata {
       )?.getAttribute('content') ||
       jsonld?.get('author.name') ||
       doc.querySelector('a[rel="author"]')?.textContent ||
-      maybeTitleHasAuthor(title),
+      title
+        ? maybeTitleHasAuthor(title)
+        : undefined,
 
     publisher:
       doc
