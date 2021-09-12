@@ -49,7 +49,9 @@ export function parseMeta(doc: Document): Metadata {
         ?.getAttribute('content') ||
       jsonld?.get('isPartOf.name') ||
       maybeRSSHasPublisher(doc) ||
-      new URL(url).hostname,
+      url
+        ? new URL(url).hostname
+        : undefined,
 
     published: maybeDate(
       doc
@@ -67,7 +69,6 @@ function maybeRSSHasPublisher(doc: Document) {
     doc.querySelector('link[type="application/atom+xml"]');
   if (!rss) return null;
 
-  console.log(rss);
   const rssTitle = rss.getAttribute('title');
   if (rssTitle && !rssTitle.toLowerCase().includes('rss')) {
     return rssTitle;
