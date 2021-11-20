@@ -50,9 +50,7 @@ export function parseMeta(doc: Document): Metadata {
       )?.getAttribute('content') ||
       jsonld?.get('author.name') ||
       doc.querySelector('a[rel="author"]')?.textContent ||
-      title
-        ? maybeTitleHasAuthor(title)
-        : undefined,
+      maybeTitleHasAuthor(title),
 
     publisher:
       doc
@@ -92,9 +90,10 @@ function maybeRSSHasPublisher(doc: Document) {
 }
 
 function maybeTitleHasAuthor(title: string) {
+  if (!title) return null;
   const by = title.split('by ', 2);
   if (by.length < 2) return null;
-  return by.pop().split(/ [|\-*]/g)[0];
+  return by.pop()?.split(/ [|\-*]/g)[0];
 }
 
 function maybeDate(datestring: string): DateTime | null {
