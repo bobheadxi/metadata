@@ -1,4 +1,4 @@
-# metadata
+# metadata [![npm (scoped)](https://img.shields.io/npm/v/@bobheadxi/metadata?label=%40bobheadxi%2Fmetadata)](https://www.npmjs.com/package/@bobheadxi/metadata)
 
 Pull metadata from a webpage through a crude heuristic that leverages regular HTML metadata, OpenGraph, JSON+LD data, and more.
 
